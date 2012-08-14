@@ -18,6 +18,7 @@ This is something like `deploy` settings. Full example:
     "
     UPDATE_REMOTE=false # default
     DELETE_EXCLUDED=true # default
+    DELETE_NOT_EXISTING=true # default
     SED="gsed -re" # in case you want to use GNU sed... "sed -Ee" is default
 
 Only `REMOTE` and `REMOTE_PATH` are mandatory. If `USER` is ommited -- local user
