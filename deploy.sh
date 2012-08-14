@@ -7,6 +7,7 @@ REMOTE_USER=""
 EXCLUDES=""
 UPDATE_REMOTE=false
 DELETE_EXCLUDED=true
+DELETE_NOT_EXISTING=true
 
 # default excludes
 DEFAULT_EXCLUDES="
@@ -82,6 +83,10 @@ DEL_EX=""
 if $DELETE_EXCLUDED ; then
     DEL_EX="--delete-excluded"
 fi
+DEL_NOT_EX=""
+if $DELETE_NOT_EXISTING ; then
+    DEL_NOT_EX="--delete --force"
+fi
 
 if $REVERSE ; then
     PROJECT_NAME=`echo $PROJECT | $SED 's/[a-zA-Z0-1\/]+\/([a-zA-Z0-9]+)/\1/'`
@@ -90,7 +95,7 @@ if $REVERSE ; then
         $REMOTE_USER@$REMOTE:$REMOTE_PATH/$PROJECT_NAME $PROJECT/..
 else
     echo $PROJECT" => "$REMOTE:$REMOTE_PATH
-    rsync -rvL $DRY_RUN $OPT_UPDATE $DEL_EX --delete --force --executability \
+    rsync -rvL $DRY_RUN $OPT_UPDATE $DEL_EX $DEL_NOT_EX --executability \
         $EXCLUDES $PROJECT $REMOTE_USER@$REMOTE:$REMOTE_PATH
 fi
 
