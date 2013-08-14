@@ -94,9 +94,12 @@ if $REVERSE ; then
     rsync -rv $DRY_RUN $OPT_UPDATE --executability $EXCLUDES \
         $REMOTE_USER@$REMOTE:$REMOTE_PATH/$PROJECT_NAME $PROJECT/..
 else
-    echo $PROJECT" => "$REMOTE:$REMOTE_PATH
-    rsync -rvL $DRY_RUN $OPT_UPDATE $DEL_EX $DEL_NOT_EX --executability \
-        $EXCLUDES $PROJECT $REMOTE_USER@$REMOTE:$REMOTE_PATH
+    for REMOTE_SERVER in "${REMOTES[@]}"
+    do
+	echo $PROJECT" => "$REMOTE_SERVER:$REMOTE_PATH
+    	rsync -rvL $DRY_RUN $OPT_UPDATE $DEL_EX $DEL_NOT_EX --executability \
+        $EXCLUDES $PROJECT $REMOTE_USER@$REMOTE_SERVER:$REMOTE_PATH
+    done
 fi
 
 exit 0
